@@ -17,8 +17,11 @@ const config = {
 };
 
 function formatarDia(dia: string) {
-  const [y, m, d] = dia.split("-").map(Number);
-  return new Date(y, (m ?? 1) - 1, d).toLocaleDateString(undefined, {
+  const partes = dia.split("-").map(Number);
+  const y = partes[0] ?? 1970;
+  const m = partes[1] ?? 1;
+  const d = partes[2] ?? 1;
+  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
     day: "2-digit",
     month: "2-digit",
   });
