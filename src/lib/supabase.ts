@@ -16,9 +16,15 @@ const key =
 
 export const supabaseConfigurado = Boolean(url && key);
 
+const isBrowser = typeof window !== "undefined";
+
 export const supabase: SupabaseClient | null = supabaseConfigurado
   ? createClient(url as string, key as string, {
-      auth: { persistSession: false, autoRefreshToken: false },
+      auth: {
+        persistSession: isBrowser,
+        autoRefreshToken: isBrowser,
+        detectSessionInUrl: isBrowser,
+      },
     })
   : null;
 
