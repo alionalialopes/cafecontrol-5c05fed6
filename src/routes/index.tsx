@@ -80,7 +80,7 @@ function Index() {
             <Coffee className="size-5" />
           </span>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Controle de café</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Controle de café!!!</h1>
             <p className="text-sm text-muted-foreground">
               Olá, {nomeUsuario}. Acompanhe suas doses diárias e seus métodos favoritos.
             </p>
