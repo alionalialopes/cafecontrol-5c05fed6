@@ -16,6 +16,7 @@ export type Preparo =
 
 export interface Dose {
   id: string;
+  user_id: string;
   quantidade: Quantidade;
   quantidade_ml: number;
   torra: Torra;
@@ -93,6 +94,15 @@ export interface DosePayload {
   data_hora: string;
 }
 
+async function obterUserId(): Promise<string> {
+  const {
+    data: { user },
+    error,
+  } = await getSupabase().auth.getUser();
+  if (error || !user) throw new Error("Usuário não autenticado");
+  return user.id;
+}
+
 function toRow(payload: DosePayload) {
   return {
     quantidade: payload.quantidade,
@@ -147,7 +157,10 @@ export async function listarConsumoPorDia(dias: number): Promise<PontoConsumo[]>
 }
 
 export async function criarDose(payload: DosePayload): Promise<void> {
-  const { error } = await getSupabase().from("doses").insert(toRow(payload));
+  const userId = await obterUserId();
+  const { error } = await getSupabase()
+    .from("doses")
+    .insert({ ...toRow(payload), user_id: userId });
   if (error) throw new Error(error.message);
 }
 
